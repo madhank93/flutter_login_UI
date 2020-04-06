@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,23 +18,22 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
-
+class _LoginPageState extends State<LoginPage>
+    with SingleTickerProviderStateMixin {
   AnimationController _iconAnimationController;
   Animation<double> _iconAnimation;
 
   @override
   void initState() {
     super.initState();
-    _iconAnimationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 500)
-    );
+    _iconAnimationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
 
-    _iconAnimation = CurvedAnimation(parent: _iconAnimationController, curve: Curves.easeOutCubic);
-    
+    _iconAnimation = CurvedAnimation(
+        parent: _iconAnimationController, curve: Curves.easeOutCubic);
+
     _iconAnimation.addListener(() => this.setState(() {}));
-
+    _iconAnimationController.forward();
   }
 
   @override
@@ -51,9 +51,35 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             new FlutterLogo(
-              size: 100,
+              size: _iconAnimation.value,
             ),
-
+            Container(
+              padding: EdgeInsets.all(40),
+              child: Theme(
+                data: ThemeData(
+                    brightness: Brightness.dark,
+                    primarySwatch: Colors.teal,
+                    inputDecorationTheme: InputDecorationTheme(
+                      labelStyle: TextStyle(
+                        fontSize: 20,
+                        color: Colors.teal,
+                      ),
+                    )),
+                child: Form(
+                    child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Enter email"),
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Enter password"),
+                      keyboardType: TextInputType.visiblePassword,
+                    ),
+                  ],
+                )),
+              ),
+            )
           ],
         )
       ],
