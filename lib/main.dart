@@ -76,6 +76,15 @@ class _LoginPageState extends State<LoginPage>
                       decoration: InputDecoration(labelText: "Enter password"),
                       keyboardType: TextInputType.visiblePassword,
                     ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 40),
+                    ),
+                    RaisedButton(
+                      onPressed: () {},
+                      color: Colors.teal,
+                      child: Text("Login"),
+                      textColor: Colors.white,
+                    )
                   ],
                 )),
               ),
